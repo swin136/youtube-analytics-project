@@ -22,7 +22,7 @@ class Channel:
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         load_credentilas()
-        api_key: str = os.getenv('YT_KEY')
+        api_key: str = os.getenv('YT_KEY')Ch
         self.youtube = build('youtube', 'v3', developerKey=api_key)
         self.channel_id = channel_id
 
