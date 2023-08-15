@@ -4,11 +4,10 @@ from dotenv import load_dotenv
 from googleapiclient.discovery import build
 
 
-def load_credentilas():
+def load_credentials():
     """Загрузка токена YouTube в переменную среды"""
-    ENV_FILE = '..\\src\\app.env'
-    load_dotenv(ENV_FILE)
-
+    env_file = '..\\src\\app.env'
+    load_dotenv(env_file)
 
 
 def printj(dict_to_print: dict) -> None:
@@ -21,8 +20,8 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        load_credentilas()
-        api_key: str = os.getenv('YT_KEY')Ch
+        load_credentials()
+        api_key: str = os.getenv('YT_KEY')
         self.youtube = build('youtube', 'v3', developerKey=api_key)
         self.channel_id = channel_id
 
@@ -30,6 +29,7 @@ class Channel:
         """Выводит в консоль информацию о канале."""
         channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         printj(channel)
+
 
 if __name__ == '__main__':
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
