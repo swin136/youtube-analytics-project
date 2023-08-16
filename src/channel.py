@@ -2,6 +2,7 @@ import json
 import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
+from pprint import pprint
 
 
 class Channel:
@@ -17,7 +18,8 @@ class Channel:
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        Channel.printj(channel)
+        # Channel.printj(channel)
+        pprint(channel)
 
     @staticmethod
     def printj(dict_to_print: dict) -> None:
