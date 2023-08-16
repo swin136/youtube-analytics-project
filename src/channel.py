@@ -116,9 +116,3 @@ class Channel:
         """Загрузка токена YouTube в переменную среды"""
         env_file = '..\\src\\app.env'
         load_dotenv(env_file)
-
-
-if __name__ == '__main__':
-    moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
-    # moscowpython = Channel('UCmSIOnaJ7oLugaqOqI2GnCg')
-    # moscowpython.print_info()
