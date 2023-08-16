@@ -1,7 +1,10 @@
 from src.channel import Channel
 
 if __name__ == '__main__':
+    # Тестовые каналы YouTube
+    # MoscowPython
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
+    # Мир Православия
     # moscowpython = Channel('UCmSIOnaJ7oLugaqOqI2GnCg')
 
     # получаем значения атрибутов
@@ -22,4 +25,3 @@ if __name__ == '__main__':
 
     # создаем файл с данными по каналу
     moscowpython.to_json()
-
