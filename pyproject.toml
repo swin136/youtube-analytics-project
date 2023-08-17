@@ -13,6 +13,9 @@ load-dotenv = "^0.1.0"
 isodate = "^0.6.1"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
