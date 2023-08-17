@@ -75,46 +75,48 @@ class Channel:
         """
         return f"{self.title} ({self.url})"
 
+    @staticmethod
+    def check_instance(function):
+        def inner(*args, **kwargs):
+            if not isinstance(args[1], args[0].__class__):
+                raise TypeError('Несоответствие типов')
+            result = function(*args, **kwargs)
+            return result
+        return inner
+
+    @check_instance
     def __add__(self, other):
         """Метод суммирует количество подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count + other.subscriber_count
 
+    @check_instance
     def __sub__(self, other):
         """Метод вычисляет разность количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count - other.subscriber_count
 
+    @check_instance
     def __gt__(self, other):
         """Метод для операции сравнения «больше» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count > other.subscriber_count
 
+    @check_instance
     def __ge__(self, other):
         """Метод для операции сравнения «больше или равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count >= other.subscriber_count
 
+    @check_instance
     def __lt__(self, other):
         """Метод для операции сравнения «меньше» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count < other.subscriber_count
 
+    @check_instance
     def __le__(self, other):
         """Метод для операции сравнения «меньше или равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count <= other.subscriber_count
 
+    @check_instance
     def __eq__(self, other):
         """Метод для операции сравнения «равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count == other.subscriber_count
 
     @property
