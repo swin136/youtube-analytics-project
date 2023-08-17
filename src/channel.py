@@ -67,7 +67,7 @@ class Channel:
                         }
         file_name_list = [self.title, 'json']
         with open('.'.join(file_name_list), 'w', encoding='utf-8') as file:
-            json.dump(channel_dict, file)
+            json.dump(channel_dict, file, indent=4)
 
     @property
     def channel_id(self):
