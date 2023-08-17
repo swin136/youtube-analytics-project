@@ -21,3 +21,10 @@ def test_channel_init(get_channels_to_test):
     my_channel = Channel(get_channels_to_test['Мир Православия'])
     assert my_channel.title == 'Мир Православия'
     assert my_channel.custom_url == 'https://www.youtube.com/@user-mirpravoslavia'
+
+
+def test_access_attribute(get_channels_to_test):
+    """Тестируем механизм защиты атрибутов объекта"""
+    with pytest.raises(AttributeError):
+        my_channel = Channel(get_channels_to_test['MoscowPython'])
+        my_channel.channel_id = "Тестовый_канал_id"
