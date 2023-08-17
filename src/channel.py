@@ -39,11 +39,11 @@ class Channel:
         # custom URL канала
         self.__customURL = channel.get('items')[0].get('snippet').get('customUrl')
         # Общее количество просмотров
-        self.__viewCount = channel.get('items')[0].get('statistics').get('viewCount')
+        self.__viewCount = int(channel.get('items')[0].get('statistics').get('viewCount'))
         # Количество подписчиков
-        self.__subscriberCount = channel.get('items')[0].get('statistics').get('subscriberCount')
+        self.__subscriberCount = int(channel.get('items')[0].get('statistics').get('subscriberCount'))
         # Количество видео на канале
-        self.__videoCount = channel.get('items')[0].get('statistics').get('videoCount')
+        self.__videoCount = int(channel.get('items')[0].get('statistics').get('videoCount'))
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
@@ -68,6 +68,54 @@ class Channel:
         file_name_list = [self.title, 'json']
         with open('.'.join(file_name_list), 'w', encoding='utf-8') as file:
             json.dump(channel_dict, file, indent=4)
+
+    def __str__(self):
+        """Магический метод для строкового представления объекта класса.
+        Шаблон представления <название_канала> (<ссылка_на_канал>)
+        """
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        """Метод суммирует количество подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Метод вычисляет разность количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count - other.subscriber_count
+
+    def __gt__(self, other):
+        """Метод для операции сравнения «больше» для количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        """Метод для операции сравнения «больше или равно» для количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count >= other.subscriber_count
+
+    def __lt__(self, other):
+        """Метод для операции сравнения «меньше» для количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        """Метод для операции сравнения «меньше или равно» для количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count <= other.subscriber_count
+
+    def __eq__(self, other):
+        """Метод для операции сравнения «равно» для количества подписчиков каналов YouTube"""
+        if not isinstance(other, self.__class__):
+            raise TypeError
+        return self.subscriber_count == other.subscriber_count
 
     @property
     def channel_id(self):
