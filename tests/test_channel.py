@@ -2,7 +2,7 @@ import pytest
 from src.channel import Channel
 
 
-@pytest.fixture()
+@pytest.fixture
 def get_channels_to_test():
     """Фикстура с тестовыми channel_id каналов YouTube"""
     return {
@@ -47,6 +47,7 @@ def test_add_method(get_channels_to_test):
 
     assert channel_1 + channel_2 == result_sum
 
+
 def test_sub_method(get_channels_to_test):
     """Тестируем магический метод __sub__ для разности подписчиков каналов YouTube"""
     channel_1 = get_channels_to_test['MoscowPython']
@@ -54,4 +55,3 @@ def test_sub_method(get_channels_to_test):
     result_sub = channel_1.subscriber_count - channel_2.subscriber_count
 
     assert channel_1 - channel_2 == result_sub
-
