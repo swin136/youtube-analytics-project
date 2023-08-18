@@ -15,15 +15,13 @@ class Channel:
         Channel.load_credentials()
         api_key: str = os.getenv('YT_KEY')
         # Создаем объект для доступа к Google YouTube
-        self.__youtube = build('youtube', 'v3', developerKey=api_key)
-        # Сохраняем ссылку на объект для работы с API вне класса
-        Channel.__youtube_object = self.__youtube
+        Channel.__youtube_object = build('youtube', 'v3', developerKey=api_key)
 
         # Заполняем атрибуты класса
         # id канала
         self.__channel_id = channel_id.strip()
 
-        channel = self.__youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         # Если вдруг мы не загрузили словарь
         if not isinstance(channel, dict):
             raise TypeError
@@ -47,8 +45,7 @@ class Channel:
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.__youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
-        # Channel.printj(channel)
+        channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         pprint(channel)
 
     def to_json(self):
@@ -75,46 +72,49 @@ class Channel:
         """
         return f"{self.title} ({self.url})"
 
+    @staticmethod
+    def check_instance(function):
+        def inner(*args, **kwargs):
+            if not isinstance(args[1], args[0].__class__):
+                raise TypeError('Несоответствие типов для проведения арифметических '
+                                '(логических) операций с экземплярами классов!')
+            result = function(*args, **kwargs)
+            return result
+        return inner
+
+    @check_instance
     def __add__(self, other):
         """Метод суммирует количество подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count + other.subscriber_count
 
+    @check_instance
     def __sub__(self, other):
         """Метод вычисляет разность количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count - other.subscriber_count
 
+    @check_instance
     def __gt__(self, other):
         """Метод для операции сравнения «больше» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count > other.subscriber_count
 
+    @check_instance
     def __ge__(self, other):
         """Метод для операции сравнения «больше или равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count >= other.subscriber_count
 
+    @check_instance
     def __lt__(self, other):
         """Метод для операции сравнения «меньше» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count < other.subscriber_count
 
+    @check_instance
     def __le__(self, other):
         """Метод для операции сравнения «меньше или равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count <= other.subscriber_count
 
+    @check_instance
     def __eq__(self, other):
         """Метод для операции сравнения «равно» для количества подписчиков каналов YouTube"""
-        if not isinstance(other, self.__class__):
-            raise TypeError
         return self.subscriber_count == other.subscriber_count
 
     @property
