@@ -55,3 +55,35 @@ def test_sub_method(get_channels_to_test):
     result_sub = channel_1.subscriber_count - channel_2.subscriber_count
 
     assert channel_1 - channel_2 == result_sub
+
+
+def test_check_instance(get_channels_to_test):
+    """Тестируем работу декоратора, проверяющего соответствие типов экземпляров классов, над которыми проводятся
+    арифметические и логические операции"""
+    # Корректный канал
+    channel_legal = get_channels_to_test['MoscowPython']
+
+    # Создаем произвольный класс, у экземпляра которого будет аттрибут subscriber_count
+    class IllegalChannel:
+        def __init__(self, subscriber_count):
+            self.subscriber_count = subscriber_count
+
+    # Инициализируем экземпляр "неправильного" класса для тестов
+    channel_illegal = IllegalChannel(126760)
+
+    # Тестируем операцию сложения
+    result_sum = channel_legal.subscriber_count + channel_illegal.subscriber_count
+    with pytest.raises(TypeError):
+        assert channel_legal + channel_illegal == result_sum
+
+    # Тестируем операцию вычитания
+    result_sub = channel_legal.subscriber_count - channel_illegal.subscriber_count
+    with pytest.raises(TypeError):
+        assert channel_legal - channel_illegal == result_sub
+
+    # Тесты для логических операций
+    # операция равнения "равно"
+    # Выравниваем значение аттрибутов subscriber_count у экземпляров классов IllegalChannel и Channel
+    channel_illegal.subscriber_count = channel_legal.subscriber_count
+    with pytest.raises(TypeError):
+        assert channel_legal == channel_illegal
