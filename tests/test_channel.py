@@ -63,7 +63,8 @@ def test_check_instance(get_channels_to_test):
     # Корректный канал
     channel_legal = get_channels_to_test['MoscowPython']
 
-    # Создаем произвольный класс, у экземпляра которого будет аттрибут subscriber_count
+    # Создаем произвольный класс, у экземпляра которого будет аттрибут subscriber_count, как и у экземпляра класса
+    # Channel
     class IllegalChannel:
         def __init__(self, subscriber_count):
             self.subscriber_count = subscriber_count
@@ -87,3 +88,11 @@ def test_check_instance(get_channels_to_test):
     channel_illegal.subscriber_count = channel_legal.subscriber_count
     with pytest.raises(TypeError):
         assert channel_legal == channel_illegal
+
+    # операция равнения "меньше или равно"
+    with pytest.raises(TypeError):
+        assert channel_legal <= channel_illegal
+
+    # операция равнения "больше или равно"
+    with pytest.raises(TypeError):
+        assert channel_legal >= channel_illegal
