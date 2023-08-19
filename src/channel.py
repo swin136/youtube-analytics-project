@@ -5,6 +5,9 @@ from googleapiclient.discovery import build
 from pprint import pprint
 from src.decorators import check_instance
 
+# Путь к файлу с токеном для доступа к YouTube API
+ENV_FILE = '..\\src\\app.env'
+
 
 class Channel:
     """Класс для ютуб-канала"""
@@ -152,6 +155,6 @@ class Channel:
 
     @staticmethod
     def load_credentials():
-        """Загрузка токена YouTube в переменную среды"""
-        env_file = '..\\src\\app.env'
+        """Загрузка токена YouTube из файла в переменную среды"""
+        env_file = ENV_FILE
         load_dotenv(env_file)
