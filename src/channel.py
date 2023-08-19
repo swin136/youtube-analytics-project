@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from pprint import pprint
+from src.decorators import check_instance
 
 
 class Channel:
@@ -71,16 +72,6 @@ class Channel:
         Шаблон представления <название_канала> (<ссылка_на_канал>)
         """
         return f"{self.title} ({self.url})"
-
-    @staticmethod
-    def check_instance(function):
-        def inner(*args, **kwargs):
-            if not isinstance(args[1], args[0].__class__):
-                raise TypeError('Несоответствие типов для проведения арифметических '
-                                '(логических) операций с экземплярами классов!')
-            result = function(*args, **kwargs)
-            return result
-        return inner
 
     @check_instance
     def __add__(self, other):
