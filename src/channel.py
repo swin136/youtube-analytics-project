@@ -12,15 +12,12 @@ ENV_FILE = '..\\src\\app.env'
 class Channel:
     """Класс для ютуб-канала"""
     __youtube_object = None
+    __youtube_key = ''
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        # Загружаем токен для доступа к YouTube API
-        Channel.load_credentials()
-        api_key: str = os.getenv('YT_KEY')
-        # Создаем объект для доступа к Google YouTube
-        Channel.__youtube_object = build('youtube', 'v3', developerKey=api_key)
-
+        # Создает объект для доступа к YouTube API
+        Channel.__youtube_object = Channel.create_youtube_object()
         # Заполняем атрибуты класса
         # id канала
         self.__channel_id = channel_id.strip()
@@ -117,30 +114,37 @@ class Channel:
 
     @property
     def title(self):
+        # Название канала
         return self.__name
 
     @property
     def video_count(self):
+        # Количество видео на канале
         return self.__videoCount
 
     @property
     def view_count(self):
+        # Общее количество просмотров
         return self.__viewCount
 
     @property
     def subscriber_count(self):
+        # Количество подписчиков
         return self.__subscriberCount
 
     @property
     def url(self):
+        # Ссылка на YouTube-канал
         return 'https://www.youtube.com/channel/' + self.__channel_id
 
     @property
     def custom_url(self):
+        # Ссылка на YouTube-канал типа @moscowdjangoru
         return 'https://www.youtube.com/' + self.__customURL
 
     @property
     def description(self):
+        # Описание канала
         return self.__description
 
     @staticmethod
@@ -158,3 +162,19 @@ class Channel:
         """Загрузка токена YouTube из файла в переменную среды"""
         env_file = ENV_FILE
         load_dotenv(env_file)
+
+    @staticmethod
+    def create_youtube_object():
+        """Создает и возвращает объект для доступа к YouTube API"""
+        # Загружаем токен для доступа к YouTube API из env-файла
+        Channel.load_credentials()
+        api_key: str = os.getenv('YT_KEY')
+        # Сохраняем ключ к API в аттрибуте класса
+        Channel.__youtube_key = api_key
+        # Создаем и возвращаем объект для доступа к Google YouTube API
+        return build('youtube', 'v3', developerKey=api_key)
+
+    @staticmethod
+    def get_api_key():
+        """Возвращает API-ключ, который используется для доступа к сервисам YouTube"""
+        return Channel.__youtube_key
