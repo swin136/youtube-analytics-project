@@ -5,6 +5,7 @@ from pprint import pprint
 class Video:
     """Класс для ролика YouTube"""
     __youtube_obj = None
+
     def __init__(self, video_id: str) -> None:
         # Создает объект для доступа к YouTube API
         if Video.__youtube_obj is None:
@@ -13,8 +14,8 @@ class Video:
         self.__video_id = video_id
 
         video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                              id=self.video_id
-                                                              ).execute()
+                                                           id=self.video_id
+                                                           ).execute()
 
         try:
             # название видео
@@ -31,7 +32,7 @@ class Video:
 
     def print_video_info(self):
         video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                              id=self.video_id).execute()
+                                                           id=self.video_id).execute()
         pprint(video_response)
 
     def __str__(self):
