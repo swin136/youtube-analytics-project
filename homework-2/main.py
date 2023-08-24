@@ -15,8 +15,8 @@ if __name__ == '__main__':
     # менять не можем
     try:
         moscowpython.channel_id = 'Новое название'
-    except AttributeError:
-        print('Ошибка при доступе к атрибуту объекта')
+    except AttributeError as error:
+        print(error)
     # AttributeError: property 'channel_id' of 'Channel' object has no setter
 
     # можем получить объект для работы с API вне класса
