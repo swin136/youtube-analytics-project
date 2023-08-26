@@ -47,26 +47,32 @@ class Video:
 
     @property
     def video_id(self):
+        """Свойство возвращает id видеоролика"""
         return self.__video_id
 
     @property
     def youtube_object(self):
+        """Свойство возвращает ссылку на объект доступа к YouTube API"""
         return Video.__youtube_obj
 
     @property
     def title(self):
+        """Свойство возвращает наименование видеоролика"""
         return self.__title
 
     @property
     def view_count(self):
+        """Свойство возвращает количество просмотров видеоролика"""
         return self.__viewCount
 
     @property
     def like_count(self):
+        """Свойство возвращает количество лайков видеоролика"""
         return self.__likeCount
 
     @property
     def link_video(self):
+        """Свойство возвращает количество ссылку на видеоролик"""
         # return f'https://www.youtube.com/watch?v={self.video_id}'
         return f'https://youtu.be/{self.video_id}'
 
@@ -78,6 +84,7 @@ class PLVideo(Video):
 
     @property
     def playlist_id(self):
+        """Свойство возвращает id плейлиста"""
         return self.__playlist_id
 
     def __repr__(self):
