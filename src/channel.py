@@ -110,62 +110,63 @@ class Channel:
 
     @property
     def channel_id(self):
+        """Возвращает id канала YouTube."""
         return self.__channel_id
 
     @property
     def title(self):
-        # Название канала
+        """Название канала YouTube."""
         return self.__name
 
     @property
     def video_count(self):
-        # Количество видео на канале
+        """Количество видео на канале YouTube."""
         return self.__videoCount
 
     @property
     def view_count(self):
-        # Общее количество просмотров
+        """Общее количество просмотров канала YouTube."""
         return self.__viewCount
 
     @property
     def subscriber_count(self):
-        # Количество подписчиков
+        """Количество подписчиков на канал YouTube."""
         return self.__subscriberCount
 
     @property
     def url(self):
-        # Ссылка на YouTube-канал
+        """Ссылка на YouTube-канал."""
         return 'https://www.youtube.com/channel/' + self.__channel_id
 
     @property
     def custom_url(self):
-        # Ссылка на YouTube-канал типа @moscowdjangoru
+        """Ссылка на YouTube-канал типа @moscowdjangoru."""
         return 'https://www.youtube.com/' + self.__customURL
 
     @property
     def description(self):
-        # Описание канала
+        """Описание канала."""
         return self.__description
 
     @staticmethod
     def get_service():
-        """Возвращает объект для работы с YouTube API"""
+        """Возвращает объект для работы с YouTube API."""
         return Channel.__youtube_object
 
     @staticmethod
     def printj(dict_to_print: dict) -> None:
-        """Выводит словарь в json-подобном удобном формате с отступами"""
+        """Выводит словарь в json-подобном удобном формате с отступами."""
         print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
 
     @staticmethod
     def load_credentials():
-        """Загрузка токена YouTube из файла в переменную среды"""
+        """Загрузка токена YouTube из файла в переменную среды."""
         env_file = ENV_FILE
         load_dotenv(env_file)
 
     @staticmethod
     def create_youtube_object():
-        """Создает и возвращает объект для доступа к YouTube API"""
+        """Создает и возвращает объект для доступа к YouTube API."""
         # Загружаем токен для доступа к YouTube API из env-файла
         Channel.load_credentials()
         api_key: str = os.getenv('YT_KEY')
@@ -176,5 +177,5 @@ class Channel:
 
     @staticmethod
     def get_api_key():
-        """Возвращает API-ключ, который используется для доступа к сервисам YouTube"""
+        """Возвращает API-ключ, который используется для доступа к сервисам YouTube."""
         return Channel.__youtube_key
