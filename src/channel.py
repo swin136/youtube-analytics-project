@@ -1,8 +1,11 @@
 import json
 import os
-from dotenv import load_dotenv
-from googleapiclient.discovery import build
 from pprint import pprint
+
+from dotenv import load_dotenv
+
+from googleapiclient.discovery import build
+
 from src.decorators import check_instance
 
 # Путь к файлу с токеном для доступа к YouTube API
@@ -22,7 +25,8 @@ class Channel:
         # id канала
         self.__channel_id = channel_id.strip()
 
-        channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        channel = Channel.get_service().channels().list(id=self.__channel_id,
+                                                        part='snippet,statistics').execute()
         # Если вдруг мы не загрузили словарь
         if not isinstance(channel, dict):
             raise TypeError
@@ -40,13 +44,15 @@ class Channel:
         # Общее количество просмотров
         self.__viewCount = int(channel.get('items')[0].get('statistics').get('viewCount'))
         # Количество подписчиков
-        self.__subscriberCount = int(channel.get('items')[0].get('statistics').get('subscriberCount'))
+        self.__subscriberCount = (
+            int(channel.get('items')[0].get('statistics').get('subscriberCount')))
         # Количество видео на канале
         self.__videoCount = int(channel.get('items')[0].get('statistics').get('videoCount'))
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = Channel.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        channel = Channel.get_service().channels().list(id=self.__channel_id,
+                                                        part='snippet,statistics').execute()
         pprint(channel)
 
     def to_json(self):
@@ -61,7 +67,7 @@ class Channel:
                         'channel custom URL': self.custom_url,
                         'subscriber count': self.subscriber_count,
                         'view count': self.view_count,
-                        'video count': self.video_count
+                        'video count': self.video_count,
                         }
         file_name_list = [self.title, 'json']
         with open('.'.join(file_name_list), 'w', encoding='utf-8') as file:
@@ -90,7 +96,8 @@ class Channel:
 
     @check_instance
     def __ge__(self, other):
-        """Метод для операции сравнения «больше или равно» для количества подписчиков каналов YouTube"""
+        """Метод для операции сравнения «больше или равно» для количества подписчиков
+        каналов YouTube"""
         return self.subscriber_count >= other.subscriber_count
 
     @check_instance
@@ -100,7 +107,8 @@ class Channel:
 
     @check_instance
     def __le__(self, other):
-        """Метод для операции сравнения «меньше или равно» для количества подписчиков каналов YouTube"""
+        """Метод для операции сравнения «меньше или равно» для количества подписчиков
+        каналов YouTube"""
         return self.subscriber_count <= other.subscriber_count
 
     @check_instance
