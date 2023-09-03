@@ -1,5 +1,6 @@
-from src.channel import Channel
 from pprint import pprint
+
+from src.channel import Channel
 
 
 class Video:
@@ -13,9 +14,10 @@ class Video:
         # Заполняем аттрибуты экземпляра класса
         self.__video_id = video_id
 
-        video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                           id=self.video_id
-                                                           ).execute()
+        video_response = (
+            Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                              id=self.video_id,
+                                              ).execute())
 
         try:
             # название видео
@@ -31,8 +33,9 @@ class Video:
             self.__likeCount = None
 
     def print_video_info(self):
-        video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                           id=self.video_id).execute()
+        video_response = (
+            Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                              id=self.video_id).execute())
         pprint(video_response)
 
     def __str__(self):
