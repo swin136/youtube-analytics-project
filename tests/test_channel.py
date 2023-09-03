@@ -1,4 +1,5 @@
 import pytest
+
 from src.channel import Channel
 
 
@@ -33,10 +34,12 @@ def test_access_attribute(get_channels_to_test):
 def test_repr_method(get_channels_to_test):
     """Тестируем метод строкового представления объекта класса"""
     my_channel = get_channels_to_test['MoscowPython']
-    assert str(my_channel) == 'MoscowPython (https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A)'
+    assert (str(my_channel) ==
+            'MoscowPython (https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A)')
 
     my_channel = get_channels_to_test['Мир Православия']
-    assert str(my_channel) == 'Мир Православия (https://www.youtube.com/channel/UCmSIOnaJ7oLugaqOqI2GnCg)'
+    assert (str(my_channel) ==
+            'Мир Православия (https://www.youtube.com/channel/UCmSIOnaJ7oLugaqOqI2GnCg)')
 
 
 def test_add_method(get_channels_to_test):
@@ -58,12 +61,13 @@ def test_sub_method(get_channels_to_test):
 
 
 def test_check_instance(get_channels_to_test):
-    """Тестируем работу декоратора, проверяющего соответствие типов экземпляров классов, над которыми проводятся
-    арифметические и логические операции"""
+    """Тестируем работу декоратора, проверяющего соответствие типов экземпляров классов,
+    над которыми проводятся арифметические и логические операции"""
     # Корректный канал
     channel_legal = get_channels_to_test['MoscowPython']
 
-    # Создаем произвольный класс, у экземпляра которого будет аттрибут subscriber_count, как и у экземпляра класса
+    # Создаем произвольный класс, у экземпляра которого будет аттрибут subscriber_count,
+    # как и у экземпляра класса
     # Channel
     class IllegalChannel:
         def __init__(self, subscriber_count):
@@ -84,7 +88,8 @@ def test_check_instance(get_channels_to_test):
 
     # Тесты для логических операций
     # операция равнения "равно"
-    # Выравниваем значение аттрибутов subscriber_count у экземпляров классов IllegalChannel и Channel
+    # Выравниваем значение аттрибутов subscriber_count у экземпляров
+    # классов IllegalChannel и Channel
     channel_illegal.subscriber_count = channel_legal.subscriber_count
     with pytest.raises(TypeError):
         assert channel_legal == channel_illegal
