@@ -1,6 +1,9 @@
 import datetime
-import requests
+
 import isodate
+
+import requests
+
 from src.channel import Channel
 from src.video import Video
 
@@ -30,13 +33,14 @@ class PlayList:
         headers = {
             "Accept": "*/*",
             "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 "
-                "Safari/537.36"
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/114.0.0.0 "
+                "Safari/537.36",
         }
         # Отправляем запрос с сервису
         response = requests.get(url, headers)
-        # Обрабатываем ответ, извлекаем из словаря наименование плейлиста, который и возвращаем (в случае ошибки
-        # возвращаем None)
+        # Обрабатываем ответ, извлекаем из словаря наименование плейлиста,
+        # который и возвращаем (в случае ошибки возвращаем None)
         if response.status_code == 200:
             try:
                 data = response.json()
@@ -47,15 +51,17 @@ class PlayList:
     @property
     def total_duration(self):
         """возвращает объект класса datetime.timedelta с суммарной длительностью плейлиста"""
-        playlist_videos = PlayList.__youtube_object.playlistItems().list(playlistId=self.__playlist_id,
-                                                                         part='contentDetails', maxResults=50).execute()
+        playlist_videos = (
+            PlayList.__youtube_object.playlistItems().list(playlistId=self.__playlist_id,
+                                                           part='contentDetails',
+                                                           maxResults=50).execute())
 
         # получить все id видеороликов из плейлиста
-        video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
+        video_ids: list[str] = [video['contentDetails']['videoId']
+                                for video in playlist_videos['items']]
         # вывести длительности видеороликов из плейлиста
         video_response = PlayList.__youtube_object.videos().list(part='contentDetails,statistics',
-                                                                 id=','.join(video_ids)
-                                                                 ).execute()
+                                                                 id=','.join(video_ids)).execute()
         # Инициализируем счетчик общей длительности видеороликов в плейлисте
         total_duration = datetime.timedelta(hours=0, minutes=0, seconds=0)
         for video in video_response['items']:
@@ -69,11 +75,12 @@ class PlayList:
     def show_best_video(self):
         """Возвращает ссылку на самое популярное видео из плейлиста (по количеству лайков)"""
         # Получаем все видео в плейлисте
-        playlist_videos = PlayList.__youtube_object.playlistItems().list(playlistId=self.__playlist_id,
-                                                                         part='contentDetails', maxResults=50).execute()
+        playlist_videos = PlayList.__youtube_object.playlistItems().list(
+            playlistId=self.__playlist_id, part='contentDetails', maxResults=50).execute()
 
         # получить все id видеороликов из плейлиста
-        video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
+        video_ids: list[str] = [video['contentDetails']['videoId']
+                                for video in playlist_videos['items']]
         # Ищем видео с наибольшим числом лайков
         favorite_link = str(None)
         search_like = 0
