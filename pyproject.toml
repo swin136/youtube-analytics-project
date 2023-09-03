@@ -16,6 +16,11 @@ requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
+flake8 = "^6.1.0"
+flake8-commas = "^2.1.0"
+pep8-naming = "^0.13.3"
+flake8-variables-names = "^0.0.6"
+flake8-import-order = "^0.18.2"
 
 [build-system]
 requires = ["poetry-core"]

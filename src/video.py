@@ -1,5 +1,6 @@
-from src.channel import Channel
 from pprint import pprint
+
+from src.channel import Channel
 
 
 class Video:
@@ -13,9 +14,10 @@ class Video:
         # Заполняем аттрибуты экземпляра класса
         self.__video_id = video_id
 
-        video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                           id=self.video_id
-                                                           ).execute()
+        video_response = (
+            Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                              id=self.video_id,
+                                              ).execute())
 
         try:
             # название видео
@@ -31,8 +33,9 @@ class Video:
             self.__likeCount = None
 
     def print_video_info(self):
-        video_response = Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                           id=self.video_id).execute()
+        video_response = (
+            Video.__youtube_obj.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                              id=self.video_id).execute())
         pprint(video_response)
 
     def __str__(self):
@@ -47,26 +50,32 @@ class Video:
 
     @property
     def video_id(self):
+        """Свойство возвращает id видеоролика"""
         return self.__video_id
 
     @property
     def youtube_object(self):
+        """Свойство возвращает ссылку на объект доступа к YouTube API"""
         return Video.__youtube_obj
 
     @property
     def title(self):
+        """Свойство возвращает наименование видеоролика"""
         return self.__title
 
     @property
     def view_count(self):
+        """Свойство возвращает количество просмотров видеоролика"""
         return self.__viewCount
 
     @property
     def like_count(self):
+        """Свойство возвращает количество лайков видеоролика"""
         return self.__likeCount
 
     @property
     def link_video(self):
+        """Свойство возвращает количество ссылку на видеоролик"""
         # return f'https://www.youtube.com/watch?v={self.video_id}'
         return f'https://youtu.be/{self.video_id}'
 
@@ -78,6 +87,7 @@ class PLVideo(Video):
 
     @property
     def playlist_id(self):
+        """Свойство возвращает id плейлиста"""
         return self.__playlist_id
 
     def __repr__(self):
